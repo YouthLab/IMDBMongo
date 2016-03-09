@@ -38,7 +38,7 @@ namespace FetchInputFilesTests
         {
             ff.ProcessCommandLineArguments();
             var count = ff.GetNumberOfFilesDownloaded();
-            Assert.AreEqual(count, 47);
+            Assert.AreEqual(count, 35);
         }
     }
 }
