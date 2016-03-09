@@ -16,8 +16,9 @@ namespace FetchInputFiles
 
         private static void Main(string[] args)
         {
-            var ff = new FetchFiles { CommandLineArguments = new List<string>(args) };
+            var ff = new FetchFiles {CommandLineArguments = new List<string>(args)};
             ff.ProcessCommandLineArguments();
+            Console.WriteLine(ff.GetNumberOfFilesDownloaded());
         }
 
         /// <summary>
@@ -48,9 +49,10 @@ namespace FetchInputFiles
                 if (tasks.Count() >= 6)
                 {
                     Task.WaitAny(tasks.ToArray());
-                    foreach (var task in tasks.ToList().Where(task => task.IsCompleted ||
-                                                                      task.IsCanceled ||
-                                                                      task.IsFaulted))
+                    foreach (var task in tasks.ToList().
+                        Where(task => task.IsCompleted ||
+                                      task.IsCanceled ||
+                                      task.IsFaulted))
                     {
                         DownloadCount++;
                         tasks.Remove(task);
@@ -58,9 +60,10 @@ namespace FetchInputFiles
                 }
             }
             Task.WaitAll(tasks.ToArray());
-            foreach (var task in tasks.ToList().Where(task => task.IsCompleted ||
-                                                              task.IsCanceled ||
-                                                              task.IsFaulted))
+            foreach (var task in tasks.ToList().
+                Where(task => task.IsCompleted ||
+                              task.IsCanceled ||
+                              task.IsFaulted))
             {
                 DownloadCount++;
                 tasks.Remove(task);
@@ -74,6 +77,7 @@ namespace FetchInputFiles
         /// <returns></returns>
         private Task DownloadFileAsync(string file)
         {
+            Console.WriteLine("Processing {0}", file);
             var uri = new Uri(CommandLineOpts.SourceUrl + file);
             using (var client = new WebClient())
             {
