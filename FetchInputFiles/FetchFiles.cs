@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using Anotar.NLog;
+using CommandLine;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,9 +17,12 @@ namespace FetchInputFiles
 
         private static void Main(string[] args)
         {
-            var ff = new FetchFiles {CommandLineArguments = new List<string>(args)};
+            LogTo.Debug("Starting application");
+            var ff = new FetchFiles { CommandLineArguments = new List<string>(args) };
             ff.ProcessCommandLineArguments();
+            LogTo.Debug("Start Download");
             Console.WriteLine(ff.GetNumberOfFilesDownloaded());
+            LogTo.Debug("End - application terminating normally");
         }
 
         /// <summary>
@@ -78,6 +82,7 @@ namespace FetchInputFiles
         private Task DownloadFileAsync(string file)
         {
             Console.WriteLine("Processing {0}", file);
+            LogTo.Debug("Started to work on {0}", file);
             var uri = new Uri(CommandLineOpts.SourceUrl + file);
             using (var client = new WebClient())
             {

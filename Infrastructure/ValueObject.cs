@@ -48,7 +48,7 @@ namespace Infrastructure
                 return false;
             }
 
-            if (typeof (T).IsAssignableFrom(left.GetType()))
+            if (left is T)
             {
                 //check not self-references...
                 return ReferenceEquals(left, right);
