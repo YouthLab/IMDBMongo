@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLineOptions.cs" />
+    <Compile Include="Parsers\CrazyCreditsParser.cs" />
     <Compile Include="Parsers\ImdbLineParser.cs" />
     <Compile Include="Parsers\MpaaRatingsReasonsFileParser.cs" />
     <Compile Include="Parsers\MultilineFileParser.cs" />

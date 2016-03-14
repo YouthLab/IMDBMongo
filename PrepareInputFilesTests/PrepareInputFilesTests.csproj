@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Parsers\CrazyCreditsParserTests.cs" />
     <Compile Include="Parsers\MpaaRatingsReasonsFileParserTests.cs" />
     <Compile Include="PrepareFilesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

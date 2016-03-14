@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PrepareInputFiles.Parsers;
 
-namespace PrepareInputFiles.ParsersTests
+namespace PrepareInputFilesTests.Parsers
 {
     [TestClass()]
     public class MpaaRatingsReasonsFileParserTests

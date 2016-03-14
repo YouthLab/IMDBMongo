@@ -1,8 +1,7 @@
 ﻿namespace DataModel
 {
-    public class MpaaRatingsReasons
+    public class MpaaRatingsReasons : MovieBase
     {
-        public string MovieName { get; set; }
         public string Reason { get; set; }
     }
 }

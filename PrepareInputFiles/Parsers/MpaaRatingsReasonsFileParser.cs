@@ -44,7 +44,7 @@ namespace PrepareInputFiles.Parsers
         /// </summary>
         /// <param name="destinationFile">The destination file.</param>
         /// <returns></returns>
-        public bool ParseFile(string destinationFile)
+        public override bool ParseFile(string destinationFile)
         {
             LogTo.Debug("\n\tBegin Parsing files");
             ReadRecords();
@@ -70,7 +70,7 @@ namespace PrepareInputFiles.Parsers
                 var record = new MpaaRatingsReasons();
                 var movieName = rawRecord.FirstOrDefault(m => m.StartsWith("MV:"));
                 if (movieName != null)
-                    record.MovieName = FixMovieNames(movieName.Remove(0, 3));
+                    FixMovieNames(record, movieName.Trim());
 
                 var reasonRecord = new StringBuilder();
                 foreach (var s in rawRecord.Where(s => s.StartsWith("RE:")))
