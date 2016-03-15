@@ -21,7 +21,7 @@ namespace PrepareInputFiles.Parsers
             PreHeaderLine2 = "==========================";
             RegularList = new List<string>
             {
-                @"(?s)(?<=\n#).*?(?=\n\n)"
+                @"(?s)(?<=\n)#.*?(?=\n\n)"
             };
             MovieIdentifier = "# ";
             ValueIdentifier = "- ";
@@ -44,15 +44,19 @@ namespace PrepareInputFiles.Parsers
             {
                 var rawRecord = line.ToString().Split('\n');
                 var record = new CrazyCredits();
-                var movieName = rawRecord.FirstOrDefault(m => m.StartsWith(" \""));
+                var movieName = rawRecord.FirstOrDefault(m => m.StartsWith("#"));
                 if (movieName != null)
-                    FixMovieNames(record, movieName.Trim());
-                var linesInCredit = new StringBuilder();
-                foreach (var s in rawRecord)
                 {
-                    if (s.StartsWith(" \""))
-                        continue;
-                    if (s.StartsWith("-"))
+                    movieName = movieName.Replace('#', ' ');
+                    FixMovieNames(record, movieName.Trim());
+                }
+
+                var linesInCredit = new StringBuilder();
+                foreach (var s in rawRecord.Where(s => !s.StartsWith("#")))
+                {
+                    if (!s.StartsWith("-"))
+                        linesInCredit.Append(s.Trim());
+                    else
                     {
                         if (linesInCredit.Length != 0x0)
                         {
@@ -62,8 +66,6 @@ namespace PrepareInputFiles.Parsers
 
                         linesInCredit.Append(s.Remove(0, 2));
                     }
-                    else
-                        linesInCredit.Append(s.Trim());
                     linesInCredit.Append(' ');
                 }
                 if (linesInCredit.Length != 0)
