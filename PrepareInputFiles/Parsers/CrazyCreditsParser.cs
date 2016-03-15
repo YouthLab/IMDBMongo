@@ -11,13 +11,13 @@ namespace PrepareInputFiles.Parsers
 {
     public class CrazyCreditsParser : MultilineFileParser
     {
-        private List<CrazyCredits> Records { get; set; }
+        private readonly List<CrazyCredits> _records;
 
         public CrazyCreditsParser(string sourceFile)
         {
             SourceFile = sourceFile;
             HeaderLine = "-------------------------";
-            PreHeaderLine1 = "MPAA RATINGS REASONS LIST";
+            PreHeaderLine1 = "";
             PreHeaderLine2 = "==========================";
             RegularList = new List<string>
             {
@@ -25,7 +25,7 @@ namespace PrepareInputFiles.Parsers
             };
             MovieIdentifier = "# ";
             ValueIdentifier = "- ";
-            Records = new List<CrazyCredits>();
+            _records = new List<CrazyCredits>();
         }
 
         public override bool ParseFile(string destinationFile)
@@ -33,9 +33,9 @@ namespace PrepareInputFiles.Parsers
             LogTo.Debug("\n\tBeign Parsing file");
             ReadRecords();
             LogTo.Debug("\n\tEnd Parsing input file");
-            File.WriteAllText(destinationFile, JsonConvert.SerializeObject(Records, Formatting.Indented));
+            File.WriteAllText(destinationFile, JsonConvert.SerializeObject(_records, Formatting.Indented));
             LogTo.Debug("Output JSON to {0}", destinationFile);
-            return Records.Any();
+            return _records.Any();
         }
 
         protected override void PopulateRecords(IEnumerable<Match> lines)
@@ -70,7 +70,7 @@ namespace PrepareInputFiles.Parsers
                 }
                 if (linesInCredit.Length != 0)
                     record.Credits.Add(linesInCredit.ToString().Trim());
-                Records.Add(record);
+                _records.Add(record);
             }
         }
     }
