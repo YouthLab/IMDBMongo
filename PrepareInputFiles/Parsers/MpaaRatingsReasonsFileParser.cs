@@ -70,7 +70,7 @@ namespace PrepareInputFiles.Parsers
                 var record = new MpaaRatingsReasons();
                 var movieName = rawRecord.FirstOrDefault(m => m.StartsWith("MV:"));
                 if (movieName != null)
-                    FixMovieNames(record, movieName.Trim());
+                    FixMovieNames(record, movieName.Replace("MV:", ""));
 
                 var reasonRecord = new StringBuilder();
                 foreach (var s in rawRecord.Where(s => s.StartsWith("RE:")))

@@ -2,6 +2,7 @@ using DataModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace PrepareInputFiles.Parsers
@@ -54,20 +55,10 @@ namespace PrepareInputFiles.Parsers
         protected IEnumerable<Match> GetRegExpMatches(string pattern)
         {
             var scan = new Regex(pattern);
-            var retValue = new List<Match>();
-
-            var lines = scan.Match(File.ReadAllText(SourceFile));
-
-            while (lines.Success)
-            {
-                retValue.Add(lines);
-                lines = lines.NextMatch();
-            }
-            return retValue;
-            //var lines = scan.Matches(File.ReadAllText(SourceFile))
-            //    .Cast<Match>()
-            //    .Where(m => m.Groups[1].Success);
-            //return lines;
+            var lines = scan.Matches(File.ReadAllText(SourceFile))
+                .Cast<Match>()
+                .Where(m => !string.IsNullOrWhiteSpace(m.Value));
+            return lines;
         }
 
         #endregion Protected Methods
