@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace PrepareInputFiles.Parsers
 {
-    public class CrazyCreditsParser : MultilineFileParser
+    public class CrazyCreditsParser : FileParser
     {
         private readonly List<CrazyCredits> _records;
 

@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace PrepareInputFiles.Parsers
 {
-    public class MpaaRatingsReasonsFileParser : MultilineFileParser
+    public class MpaaRatingsReasonsFileParser : FileParser
     {
         #region Public Constructors
 

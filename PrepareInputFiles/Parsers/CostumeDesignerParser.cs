@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace PrepareInputFiles.Parsers
 {
-    public class CostumeDesignerParser : MultilineFileParser
+    public class CostumeDesignerParser : FileParser
     {
         #region Public Constructors
 

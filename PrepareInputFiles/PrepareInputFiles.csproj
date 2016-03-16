@@ -64,11 +64,12 @@
   <ItemGroup>
     <Compile Include="CommandLineOptions.cs" />
     <Compile Include="Parsers\AlternateVersionsParser.cs" />
+    <Compile Include="Parsers\CertificatesParser.cs" />
     <Compile Include="Parsers\CostumeDesignerParser.cs" />
     <Compile Include="Parsers\CrazyCreditsParser.cs" />
     <Compile Include="Parsers\ImdbLineParser.cs" />
     <Compile Include="Parsers\MpaaRatingsReasonsFileParser.cs" />
-    <Compile Include="Parsers\MultilineFileParser.cs" />
+    <Compile Include="Parsers\FileParser.cs" />
     <Compile Include="PrepareFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

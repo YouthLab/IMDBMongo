@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace PrepareInputFiles.Parsers
 {
-    public abstract class MultilineFileParser : ImdbLineParser
+    public abstract class FileParser : ImdbLineParser
     {
         protected List<string> RegularList { get; set; }
         protected string MovieIdentifier { get; set; }
