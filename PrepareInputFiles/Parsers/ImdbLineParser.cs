@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace PrepareInputFiles.Parsers
@@ -55,7 +56,7 @@ namespace PrepareInputFiles.Parsers
         protected IEnumerable<Match> GetRegExpMatches(string pattern)
         {
             var scan = new Regex(pattern);
-            var lines = scan.Matches(File.ReadAllText(SourceFile))
+            var lines = scan.Matches(File.ReadAllText(SourceFile, Encoding.UTF8))
                 .Cast<Match>()
                 .Where(m => !string.IsNullOrWhiteSpace(m.Value));
             return lines;

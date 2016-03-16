@@ -10,8 +10,12 @@ namespace PrepareInputFiles.Parsers
 {
     public class CostumeDesignerParser : MultilineFileParser
     {
-        private readonly List<CostumeDesigner> _costumeDesigners;
+        #region Public Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CostumeDesignerParser"/> class.
+        /// </summary>
+        /// <param name="sourceFile">The source file.</param>
         public CostumeDesignerParser(string sourceFile)
         {
             SourceFile = sourceFile;
@@ -25,6 +29,15 @@ namespace PrepareInputFiles.Parsers
             PreHeaderLine2 = @"----			------";
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        /// <summary>
+        /// Parses the file.
+        /// </summary>
+        /// <param name="destinationFile">The destination file.</param>
+        /// <returns></returns>
         public override bool ParseFile(string destinationFile)
         {
             LogTo.Debug("\n\tBeign Parsing file");
@@ -35,36 +48,75 @@ namespace PrepareInputFiles.Parsers
             return _costumeDesigners.Any();
         }
 
+        #endregion Public Methods
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Populates the records.
+        /// </summary>
+        /// <param name="lines">The lines.</param>
         protected override void PopulateRecords(IEnumerable<Match> lines)
         {
             CostumeDesigner record = null;
-            foreach (var line in lines)
+            foreach (var rawRecords in
+                from line in lines
+                select line.ToString().Split('\n')
+                into rawRecords
+                where rawRecords[0].Contains('\t')
+                select rawRecords.Where(val => val != PreHeaderLine1).ToArray()
+                into rawRecords
+                select rawRecords.Where(val => val != PreHeaderLine2).ToArray())
             {
-                var rawRecord = line.ToString().Split('\n');
-                if (!rawRecord[0].Contains('\t'))
-                    continue;
-                rawRecord = rawRecord.Where(val => val != PreHeaderLine1).ToArray();
-                rawRecord = rawRecord.Where(val => val != PreHeaderLine2).ToArray();
-                var scan = new Regex(@"^[\w-,'.].*\t.*");
-                var artistLine = scan.Match(rawRecord[0]);
-                if (artistLine.Success)
+                record = new CostumeDesigner();
+                foreach (var rawRecord in rawRecords)
                 {
-                    if (record != null && !string.IsNullOrWhiteSpace(record.Name))
-                        _costumeDesigners.Add(record);
-                    record = new CostumeDesigner();
-                    var artistLineSplit = artistLine.Value.Split('\t');
-                    if (artistLineSplit.Length > 2) //remove blank elements
+                    var scan = new Regex(@"^\s\s*");
+                    var artistLine = scan.Match(rawRecord);
+                    if (!artistLine.Success) //new artist
                     {
-                        artistLineSplit = artistLineSplit.Where(val => val != "").ToArray();
+                        var artistLineSplit = rawRecord.Split('\t');
+                        artistLineSplit = artistLineSplit.
+                            Where(val => val != "").ToArray(); //remove blank elements
+
+                        if (artistLineSplit.Length > 0)
+                            record.Name = artistLineSplit[0].Trim();
+                        if (artistLineSplit.Length >= 2)
+                            AddMovieDetails(artistLineSplit[1], record);
                     }
-                    if (artistLineSplit.Length >= 1)
-                        record.Name = artistLineSplit[0];
-                    if (artistLineSplit.Length >= 2)
-                        FixMovieNames(record, artistLineSplit[1]);
+                    else //other work by the same artist
+                    {
+                        var artistLineSplit = rawRecord.Split('\t');
+                        artistLineSplit = artistLineSplit.
+                            Where(val => val != "").ToArray(); //remove blank elements
+                        foreach (var s in artistLineSplit)
+                            AddMovieDetails(s, record);
+                    }
                 }
+                if (!string.IsNullOrWhiteSpace(record.Name))
+                    _costumeDesigners.Add(record);
             }
             if (record != null && !string.IsNullOrWhiteSpace(record.Name))
                 _costumeDesigners.Add(record);
         }
+
+        #endregion Protected Methods
+
+        #region Private Fields
+
+        private readonly List<CostumeDesigner> _costumeDesigners;
+
+        #endregion Private Fields
+
+        #region Private Methods
+
+        private void AddMovieDetails(string s, CostumeDesigner record)
+        {
+            var mb = new MovieBase();
+            FixMovieNames(mb, s);
+            record.MovieBases.Add(mb);
+        }
+
+        #endregion Private Methods
     }
 }
