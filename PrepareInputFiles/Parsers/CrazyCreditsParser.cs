@@ -13,6 +13,10 @@ namespace PrepareInputFiles.Parsers
     {
         private readonly List<CrazyCredits> _records;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CrazyCreditsParser"/> class.
+        /// </summary>
+        /// <param name="sourceFile">The source file.</param>
         public CrazyCreditsParser(string sourceFile)
         {
             SourceFile = sourceFile;
