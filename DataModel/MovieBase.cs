@@ -12,7 +12,7 @@
         {
             unchecked
             {
-                int hashCode = (MovieName != null ? MovieName.GetHashCode() : 0);
+                var hashCode = (MovieName != null ? MovieName.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Episode != null ? Episode.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ Year.GetHashCode();
                 return hashCode;
@@ -33,6 +33,8 @@
         {
             if (Equals(left, null))
                 return Equals(right, null);
+            if (Equals(right, null))
+                return false;
             return string.Equals(left.MovieName, right.MovieName) &&
                    string.Equals(left.Episode, right.Episode) && left.Year == right.Year;
         }

@@ -10,7 +10,7 @@ namespace PrepareInputFiles.Parsers
 {
     public class TagLinesParser : FileParser
     {
-        private List<TagLine> _records;
+        private Dictionary<MovieBase, TagLine> _records;
 
         public TagLinesParser(string sourceFile)
         {
@@ -24,7 +24,7 @@ namespace PrepareInputFiles.Parsers
             };
             MovieIdentifier = "# ";
             ValueIdentifier = "- ";
-            _records = new List<TagLine>();
+            _records = new Dictionary<MovieBase, TagLine>();
         }
 
         public override bool ParseFile(string destinationFile)
@@ -32,8 +32,9 @@ namespace PrepareInputFiles.Parsers
             LogTo.Debug("\n\tBeign Parsing file");
             ReadRecords();
             LogTo.Debug("\n\tEnd Parsing input file");
-            _records = _records.OrderBy(m => m.MovieName).ThenBy(y => y.Year).ToList();
-            File.WriteAllText(destinationFile, JsonConvert.SerializeObject(_records, Formatting.Indented));
+            File.WriteAllText(destinationFile, JsonConvert.SerializeObject(
+                _records.Values.OrderBy(y => y.Year).ThenBy(m => m.MovieName),
+                Formatting.Indented));
             LogTo.Debug("Output JSON to {0}", destinationFile);
             return _records.Any();
         }
@@ -44,26 +45,29 @@ namespace PrepareInputFiles.Parsers
             {
                 var rawRecord = line.ToString().Split('\n');
                 var record = new TagLine();
-                var movieName = rawRecord.FirstOrDefault(m => m.StartsWith("#"));
-                if (movieName != null)
-                {
-                    movieName = movieName.Replace('#', ' ');
-                    FixMovieNames(record, movieName.Trim());
-                }
+                var movieName = rawRecord.FirstOrDefault(m => m.StartsWith("# "));
+                if (string.IsNullOrWhiteSpace(movieName))
+                    continue;
+
+                movieName = movieName.Replace('#', ' ');
+                FixMovieNames(record, movieName.Trim());
+
                 foreach (var str in rawRecord.Where(s => !s.StartsWith("#")))
                 {
                     record.TagLines.Add(str.Trim());
                 }
-                //foreach (var tagLine in
-                //    _records.Where(tagLine => (MovieBase)tagLine ==
-                //        ((MovieBase)record)))
-                //{
-                //    foreach (var str in record.TagLines)
-                //        tagLine.TagLines.Add(str);
-                //    record.TagLines.Clear();
-                //}
+                if (_records.ContainsKey((MovieBase)record))
+                {
+                    var recordToUpdate = _records.FirstOrDefault(m => m.Key == (MovieBase)record).Value;
+                    foreach (var tagLine in record.TagLines.ToArray())
+                    {
+                        recordToUpdate.TagLines.Add(tagLine);
+                        record.TagLines.Remove(tagLine);
+                    }
+                }
+
                 if (record.TagLines.Any())
-                    _records.Add(record);
+                    _records.Add((MovieBase)record, record);
             }
         }
     }
