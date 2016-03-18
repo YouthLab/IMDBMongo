@@ -17,7 +17,7 @@ namespace PrepareInputFiles
 
         private static void Main(string[] args)
         {
-            var pf = new PrepareFiles() { CommandLineArguments = new List<string>(args) };
+            var pf = new PrepareFiles() {CommandLineArguments = new List<string>(args)};
             if (pf.ProcessCommandLineArguments() == false)
             {
                 Console.WriteLine("Invalid or incorrect command line arguments");
@@ -40,7 +40,7 @@ namespace PrepareInputFiles
             var files = File.ReadAllLines(fileLIst);
             foreach (var sfInfo in
                 files.Select(file => Options.SourceFolder + file).
-                Select(sourceFile => new FileInfo(sourceFile)))
+                    Select(sourceFile => new FileInfo(sourceFile)))
             {
                 try
                 {
@@ -79,7 +79,7 @@ namespace PrepareInputFiles
                 using (FileStream decompressedFileStream = File.Create(newFileName))
                 {
                     using (
-                        GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
+                        var decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
                     {
                         decompressionStream.CopyTo(decompressedFileStream);
                         Console.WriteLine("Decompressed: {0}", fileToDecompress.Name);

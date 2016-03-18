@@ -1,17 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace DataModel
+﻿namespace DataModel
 {
-    public class CostumeDesigner
+    public class CostumeDesigner : Artist
     {
-        public CostumeDesigner()
-        {
-            MovieBases = new List<MovieBase>();
-        }
+    }
 
-        public string Name { get; set; }
-
-        //MovieBase
-        public List<MovieBase> MovieBases { get; set; }
+    public class ProductionDesigner : Artist
+    {
     }
 }

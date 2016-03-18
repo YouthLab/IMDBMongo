@@ -70,6 +70,7 @@
     <Compile Include="Parsers\ImdbLineParser.cs" />
     <Compile Include="Parsers\MpaaRatingsReasonsFileParser.cs" />
     <Compile Include="Parsers\FileParser.cs" />
+    <Compile Include="Parsers\ProdDesignerParser.cs" />
     <Compile Include="Parsers\TagLinesParser.cs" />
     <Compile Include="PrepareFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

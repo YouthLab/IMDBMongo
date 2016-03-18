@@ -46,7 +46,7 @@ namespace PrepareInputFiles.Parsers
         {
             foreach (var line in lines)
             {
-                var rawRecord = line.ToString().Split('\t');
+                var rawRecord = UtfStr(line).Split('\t');
                 rawRecord = rawRecord.Where(val => val != string.Empty).ToArray();
                 var certificate = new Certificate();
                 if (rawRecord.Length >= 1)
@@ -59,7 +59,7 @@ namespace PrepareInputFiles.Parsers
                 }
                 else
                 {
-                    if ((MovieBase)Records.Last() == (MovieBase)certificate)
+                    if ((MovieBase) Records.Last() == (MovieBase) certificate)
                         Records.Last().RatingList.Add(certificate.RatingList.First());
                     else
                         Records.Add(certificate);

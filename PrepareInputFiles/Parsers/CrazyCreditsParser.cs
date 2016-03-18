@@ -46,7 +46,7 @@ namespace PrepareInputFiles.Parsers
         {
             foreach (var line in lines)
             {
-                var rawRecord = line.ToString().Split('\n');
+                var rawRecord = UtfStr(line).Split('\n');
                 var record = new CrazyCredits();
                 var movieName = rawRecord.FirstOrDefault(m => m.StartsWith("#"));
                 if (movieName != null)

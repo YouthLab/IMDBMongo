@@ -43,7 +43,7 @@ namespace PrepareInputFiles.Parsers
         {
             foreach (var line in lines)
             {
-                var rawRecord = line.ToString().Split('\n');
+                var rawRecord = UtfStr(line).Split('\n');
                 var record = new TagLine();
                 var movieName = rawRecord.FirstOrDefault(m => m.StartsWith("# "));
                 if (string.IsNullOrWhiteSpace(movieName))
@@ -56,9 +56,9 @@ namespace PrepareInputFiles.Parsers
                 {
                     record.TagLines.Add(str.Trim());
                 }
-                if (_records.ContainsKey((MovieBase)record))
+                if (_records.ContainsKey((MovieBase) record))
                 {
-                    var recordToUpdate = _records.FirstOrDefault(m => m.Key == (MovieBase)record).Value;
+                    var recordToUpdate = _records.FirstOrDefault(m => m.Key == (MovieBase) record).Value;
                     foreach (var tagLine in record.TagLines.ToArray())
                     {
                         recordToUpdate.TagLines.Add(tagLine);
@@ -67,7 +67,7 @@ namespace PrepareInputFiles.Parsers
                 }
 
                 if (record.TagLines.Any())
-                    _records.Add((MovieBase)record, record);
+                    _records.Add((MovieBase) record, record);
             }
         }
     }

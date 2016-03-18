@@ -61,12 +61,12 @@ namespace PrepareInputFiles.Parsers
             CostumeDesigner record = null;
             foreach (var rawRecords in
                 from line in lines
-                select line.ToString().Split('\n')
-                into rawRecords
-                where rawRecords[0].Contains('\t')
-                select rawRecords.Where(val => val != PreHeaderLine1).ToArray()
-                into rawRecords
-                select rawRecords.Where(val => val != PreHeaderLine2).ToArray())
+                select UtfStr(line).Split('\n')
+                    into rawRecords
+                    where rawRecords[0].Contains('\t')
+                    select rawRecords.Where(val => val != PreHeaderLine1).ToArray()
+                        into rawRecords
+                        select rawRecords.Where(val => val != PreHeaderLine2).ToArray())
             {
                 record = new CostumeDesigner();
                 foreach (var rawRecord in rawRecords)

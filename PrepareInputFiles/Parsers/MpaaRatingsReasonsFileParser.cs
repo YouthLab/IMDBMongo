@@ -49,7 +49,9 @@ namespace PrepareInputFiles.Parsers
             LogTo.Debug("\n\tBegin Parsing files");
             ReadRecords();
             LogTo.Debug(("\n\tEnd Parsing input file"));
-            File.WriteAllText(destinationFile, JsonConvert.SerializeObject(_records, Formatting.Indented));
+            File.WriteAllText(destinationFile, JsonConvert.SerializeObject(_records.OrderBy(y => y.Year).
+                ThenBy(m => m.MovieName),
+                Formatting.Indented));
             LogTo.Debug("Output JSON to {0}", destinationFile);
             return _records.Any();
         }
@@ -66,7 +68,7 @@ namespace PrepareInputFiles.Parsers
         {
             foreach (var line in lines)
             {
-                var rawRecord = line.ToString().Split('\n');
+                var rawRecord = UtfStr(line).Split('\n');
                 var record = new MpaaRatingsReasons();
                 var movieName = rawRecord.FirstOrDefault(m => m.StartsWith("MV:"));
                 if (movieName != null)

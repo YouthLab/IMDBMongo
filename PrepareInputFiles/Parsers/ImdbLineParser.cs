@@ -28,6 +28,8 @@ namespace PrepareInputFiles.Parsers
         protected string PreHeaderLine1 { get; set; }
         protected string PreHeaderLine2 { get; set; }
         protected string SourceFile { get; set; }
+        protected readonly Encoding Iso88591 = Encoding.GetEncoding("iso-8859-1");
+        protected readonly Encoding Utf8 = Encoding.UTF8;
 
         #endregion Protected Properties
 
@@ -41,6 +43,14 @@ namespace PrepareInputFiles.Parsers
         #endregion Protected Constructors
 
         #region Protected Methods
+
+        protected string UtfStr(Match line)
+        {
+            var isoBytes = Iso88591.GetBytes(line.Value);
+            var utfLine = Encoding.Convert(Iso88591, Utf8, isoBytes);
+            var utfStr = Encoding.UTF8.GetString(utfLine);
+            return utfStr;
+        }
 
         protected void FixMovieNames(MovieBase movieBase, string nameInFile)
         {
