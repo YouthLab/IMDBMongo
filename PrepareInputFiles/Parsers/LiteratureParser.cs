@@ -17,8 +17,8 @@ namespace PrepareInputFiles.Parsers
         {
             SourceFile = sourceFile;
             HeaderLine = "-------------------------";
-            PreHeaderLine1 = "MPAA RATINGS REASONS LIST";
-            PreHeaderLine2 = "==========================";
+            PreHeaderLine1 = "LITERATURE LIST";
+            PreHeaderLine2 = "===============";
             RegularList = new List<string>
             {
                 @"(?s)(?<=\n)MOVI.*?(?=\n-)"
