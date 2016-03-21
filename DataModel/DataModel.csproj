@@ -44,6 +44,7 @@
     <Compile Include="Certificate.cs" />
     <Compile Include="CostumeDesigner.cs" />
     <Compile Include="CrazyCredits.cs" />
+    <Compile Include="LiteratureCredit.cs" />
     <Compile Include="MovieBase.cs" />
     <Compile Include="MpaaRatingsReasons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

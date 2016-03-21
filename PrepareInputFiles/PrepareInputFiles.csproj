@@ -68,6 +68,7 @@
     <Compile Include="Parsers\CostumeDesignerParser.cs" />
     <Compile Include="Parsers\CrazyCreditsParser.cs" />
     <Compile Include="Parsers\ImdbLineParser.cs" />
+    <Compile Include="Parsers\LiteratureParser.cs" />
     <Compile Include="Parsers\MpaaRatingsReasonsFileParser.cs" />
     <Compile Include="Parsers\FileParser.cs" />
     <Compile Include="Parsers\ProdDesignerParser.cs" />

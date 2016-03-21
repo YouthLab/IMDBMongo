@@ -54,6 +54,7 @@
     <Compile Include="Parsers\CertificatesParserTests.cs" />
     <Compile Include="Parsers\CostumeDesignerParserTests.cs" />
     <Compile Include="Parsers\CrazyCreditsParserTests.cs" />
+    <Compile Include="Parsers\LiteratureParserTests.cs" />
     <Compile Include="Parsers\MpaaRatingsReasonsFileParserTests.cs" />
     <Compile Include="Parsers\ProdDesignerParserTests.cs" />
     <Compile Include="Parsers\TagLinesParserTests.cs" />
