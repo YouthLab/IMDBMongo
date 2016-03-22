@@ -1,4 +1,6 @@
-﻿namespace DataModel
+﻿using DataModel.InputFileProcessing;
+
+namespace DataModel
 {
     public class CostumeDesigner : Artist
     {

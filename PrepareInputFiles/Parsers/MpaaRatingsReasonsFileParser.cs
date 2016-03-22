@@ -1,5 +1,5 @@
 ﻿using Anotar.NLog;
-using DataModel;
+using DataModel.InputFileProcessing;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +23,6 @@ namespace PrepareInputFiles.Parsers
             HeaderLine = "-------------------------";
             PreHeaderLine1 = "MPAA RATINGS REASONS LIST";
             PreHeaderLine2 = "==========================";
-            _recordHeaderLine = HeaderLine;
             RegularList = new List<string>
             {
                 @"MV:(.*?(\n))RE: .*\n\n",
@@ -87,7 +86,6 @@ namespace PrepareInputFiles.Parsers
         #region Private Fields
 
         private readonly List<MpaaRatingsReasons> _records;
-        private string _recordHeaderLine;
 
         #endregion Private Fields
     }

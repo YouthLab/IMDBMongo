@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="CommandLineOptions.cs" />
     <Compile Include="Parsers\AlternateVersionsParser.cs" />
+    <Compile Include="Parsers\BusinessParser.cs" />
     <Compile Include="Parsers\CertificatesParser.cs" />
     <Compile Include="Parsers\CostumeDesignerParser.cs" />
     <Compile Include="Parsers\CrazyCreditsParser.cs" />

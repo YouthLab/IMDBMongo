@@ -1,5 +1,6 @@
 ﻿using Anotar.NLog;
 using DataModel;
+using DataModel.InputFileProcessing;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +20,7 @@ namespace PrepareInputFiles.Parsers
         public CostumeDesignerParser(string sourceFile)
         {
             SourceFile = sourceFile;
-            RegularList = new List<string>()
+            RegularList = new List<string>
             {
                 @"(?s)(?<=\n\n).*?(?=\n\n)"
             };
@@ -62,11 +63,11 @@ namespace PrepareInputFiles.Parsers
             foreach (var rawRecords in
                 from line in lines
                 select UtfStr(line).Split('\n')
-                    into rawRecords
-                    where rawRecords[0].Contains('\t')
-                    select rawRecords.Where(val => val != PreHeaderLine1).ToArray()
-                        into rawRecords
-                        select rawRecords.Where(val => val != PreHeaderLine2).ToArray())
+                into rawRecords
+                where rawRecords[0].Contains('\t')
+                select rawRecords.Where(val => val != PreHeaderLine1).ToArray()
+                into rawRecords
+                select rawRecords.Where(val => val != PreHeaderLine2).ToArray())
             {
                 record = new CostumeDesigner();
                 foreach (var rawRecord in rawRecords)

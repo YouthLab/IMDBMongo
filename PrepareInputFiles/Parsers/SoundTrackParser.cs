@@ -1,5 +1,5 @@
 ﻿using Anotar.NLog;
-using DataModel;
+using DataModel.InputFileProcessing;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ namespace PrepareInputFiles.Parsers
 {
     public class SoundTrackParser : FileParser
     {
-        private List<SoundTrack> _records { get; set; }
+        private List<SoundTrack> Records { get; set; }
 
         public SoundTrackParser(string sourceFile)
         {
@@ -22,7 +22,7 @@ namespace PrepareInputFiles.Parsers
             {
                 @"(?s)(?<=\n)#.*?(?=\n\n)"
             };
-            _records = new List<SoundTrack>();
+            Records = new List<SoundTrack>();
         }
 
         public override bool ParseFile(string destinationFile)
@@ -30,11 +30,11 @@ namespace PrepareInputFiles.Parsers
             LogTo.Debug("\n\tBegin Parsing files");
             ReadRecords();
             LogTo.Debug(("\n\tEnd Parsing input file"));
-            File.WriteAllText(destinationFile, JsonConvert.SerializeObject(_records.OrderBy(y => y.Year).
+            File.WriteAllText(destinationFile, JsonConvert.SerializeObject(Records.OrderBy(y => y.Year).
                 ThenBy(m => m.MovieName),
                 Formatting.Indented));
             LogTo.Debug("Output JSON to {0}", destinationFile);
-            return _records.Any();
+            return Records.Any();
         }
 
         protected override void PopulateRecords(IEnumerable<Match> lines)
@@ -53,7 +53,7 @@ namespace PrepareInputFiles.Parsers
                     else
                         record.Titles.Add(s.Remove(0, 1).Replace('\"', ' ').Trim());
                 }
-                _records.Add(record);
+                Records.Add(record);
             }
         }
     }

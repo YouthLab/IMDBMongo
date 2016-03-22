@@ -1,4 +1,4 @@
-﻿namespace DataModel
+﻿namespace DataModel.InputFileProcessing
 {
     public class MovieBase
     {

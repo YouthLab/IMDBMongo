@@ -1,5 +1,5 @@
 ﻿using Anotar.NLog;
-using DataModel;
+using DataModel.InputFileProcessing;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ namespace PrepareInputFiles.Parsers
 {
     public class TagLinesParser : FileParser
     {
-        private Dictionary<MovieBase, TagLine> _records;
+        private readonly Dictionary<MovieBase, TagLine> _records;
 
         public TagLinesParser(string sourceFile)
         {

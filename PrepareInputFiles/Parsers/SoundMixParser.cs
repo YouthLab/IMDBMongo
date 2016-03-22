@@ -1,5 +1,5 @@
 ﻿using Anotar.NLog;
-using DataModel;
+using DataModel.InputFileProcessing;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -47,11 +47,11 @@ namespace PrepareInputFiles.Parsers
                 if (recordSplit.Length < 1) continue;
                 var movie = new MovieBase();
                 FixMovieNames(movie, recordSplit[0]);
-                if (!movie.Equals((MovieBase)record))
+                if (!movie.Equals((MovieBase) record))
                 {
                     if (!string.IsNullOrWhiteSpace(record.MovieName))
                         _records.Add(record);
-                    record = new SoundMix()
+                    record = new SoundMix
                     {
                         Episode = movie.Episode,
                         MovieName = movie.MovieName,

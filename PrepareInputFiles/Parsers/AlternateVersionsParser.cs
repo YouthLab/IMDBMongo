@@ -1,5 +1,5 @@
 ﻿using Anotar.NLog;
-using DataModel;
+using DataModel.InputFileProcessing;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;

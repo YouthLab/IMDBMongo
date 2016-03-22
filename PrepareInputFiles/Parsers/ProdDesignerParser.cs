@@ -1,5 +1,6 @@
 ﻿using Anotar.NLog;
 using DataModel;
+using DataModel.InputFileProcessing;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -10,20 +11,20 @@ namespace PrepareInputFiles.Parsers
 {
     public class ProdDesignerParser : FileParser
     {
-        public Dictionary<string, ProductionDesigner> ProductionDesigners { get; set; }
-        private ProductionDesigner record;
+        private Dictionary<string, ProductionDesigner> ProductionDesigners { get; set; }
+        private ProductionDesigner _record;
 
         public ProdDesignerParser(string sourceFile)
         {
             SourceFile = sourceFile;
-            RegularList = new List<string>()
+            RegularList = new List<string>
             {
                 @".*\t\w*.*\(.*\).*"
             };
             ProductionDesigners = new Dictionary<string, ProductionDesigner>();
             PreHeaderLine1 = "Name			Titles";
             PreHeaderLine2 = "----			------";
-            record = new ProductionDesigner();
+            _record = new ProductionDesigner();
         }
 
         public override bool ParseFile(string destinationFile)
@@ -46,32 +47,32 @@ namespace PrepareInputFiles.Parsers
 
                 if (!artistLine.Success) //new Artist
                 {
-                    if (!string.IsNullOrWhiteSpace(record.Name))
+                    if (!string.IsNullOrWhiteSpace(_record.Name))
                     {
-                        var mb = record.MovieBases.OrderBy(y => y.Year).ToList();
-                        record.MovieBases = mb;
-                        if (ProductionDesigners.ContainsKey(record.Name))
+                        var mb = _record.MovieBases.OrderBy(y => y.Year).ToList();
+                        _record.MovieBases = mb;
+                        if (ProductionDesigners.ContainsKey(_record.Name))
                         {
-                            var oldRcd = ProductionDesigners.First(m => m.Key.Equals(record.Name)).Value;
-                            foreach (var movieBase in record.MovieBases)
+                            var oldRcd = ProductionDesigners.First(m => m.Key.Equals(_record.Name)).Value;
+                            foreach (var movieBase in _record.MovieBases)
                             {
                                 oldRcd.MovieBases.Add(movieBase);
                             }
                         }
                         else
-                            ProductionDesigners.Add(record.Name, record);
+                            ProductionDesigners.Add(_record.Name, _record);
                     }
-                    record = new ProductionDesigner();
+                    _record = new ProductionDesigner();
                     var utfStr = UtfStr(line);
                     var fields = utfStr.Split('\t').Where(v => v != "").ToArray();
                     if (fields.Length > 0)
-                        record.Name = fields[0].Trim();
+                        _record.Name = fields[0].Trim();
                     if (fields.Length >= 2)
-                        AddMoiveDetails(fields[1], record);
+                        AddMoiveDetails(fields[1], _record);
                 }
                 else
                     foreach (var field in UtfStr(line).Split('\t').Where(v => v != "").ToArray())
-                        AddMoiveDetails(field, record);
+                        AddMoiveDetails(field, _record);
             }
         }
 

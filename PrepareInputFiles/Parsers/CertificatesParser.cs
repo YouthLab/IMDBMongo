@@ -1,5 +1,5 @@
 ﻿using Anotar.NLog;
-using DataModel;
+using DataModel.InputFileProcessing;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -70,7 +70,7 @@ namespace PrepareInputFiles.Parsers
         private void AddRatings(Certificate workCertificate, string detail)
         {
             var details = detail.Split(':');
-            var ratings = new Ratings()
+            var ratings = new Ratings
             {
                 Country = details[0],
                 Rating = details[1]

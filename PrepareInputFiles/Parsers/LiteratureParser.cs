@@ -1,5 +1,5 @@
 ﻿using Anotar.NLog;
-using DataModel;
+using DataModel.InputFileProcessing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -71,47 +71,47 @@ namespace PrepareInputFiles.Parsers
                             break;
 
                         case "ADPT":
-                            ExtractDetails(details[1], line, lc);
+                            ExtractDetails(details[1], lc);
                             lc.CreditedFor = CreditedFor.Adaptation;
                             break;
 
                         case "BOOK":
-                            ExtractDetails(details[1], line, lc);
+                            ExtractDetails(details[1], lc);
                             lc.CreditedFor = CreditedFor.Book;
                             break;
 
                         case "CRIT":
-                            ExtractDetails(details[1], line, lc);
+                            ExtractDetails(details[1], lc);
                             lc.CreditedFor = CreditedFor.CriticalReview;
                             break;
 
                         case "ESSY":
-                            ExtractDetails(details[1], line, lc);
+                            ExtractDetails(details[1], lc);
                             lc.CreditedFor = CreditedFor.Essay;
                             break;
 
                         case "IVIW":
-                            ExtractDetails(details[1], line, lc);
+                            ExtractDetails(details[1], lc);
                             lc.CreditedFor = CreditedFor.Interview;
                             break;
 
                         case "NOVL":
-                            ExtractDetails(details[1], line, lc);
+                            ExtractDetails(details[1], lc);
                             lc.CreditedFor = CreditedFor.Novel;
                             break;
 
                         case "PROT":
-                            ExtractDetails(details[1], line, lc);
+                            ExtractDetails(details[1], lc);
                             lc.CreditedFor = CreditedFor.ProdProtocol;
                             break;
 
                         case "SCRP":
-                            ExtractDetails(details[1], line, lc);
+                            ExtractDetails(details[1], lc);
                             lc.CreditedFor = CreditedFor.Script;
                             break;
 
                         case "OTHR":
-                            ExtractDetails(details[1], line, lc);
+                            ExtractDetails(details[1], lc);
                             lc.CreditedFor = CreditedFor.Other;
                             break;
                     }
@@ -135,7 +135,7 @@ namespace PrepareInputFiles.Parsers
 
         #region Private Methods
 
-        private static void ExtractDetails(string details, Match line, LitContribution lc)
+        private static void ExtractDetails(string details, LitContribution lc)
         {
             var subDetails = details.Split(".".ToCharArray(), 2);
             if (subDetails.Length >= 1)

@@ -1,4 +1,4 @@
-using DataModel;
+using DataModel.InputFileProcessing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,8 +28,8 @@ namespace PrepareInputFiles.Parsers
         protected string PreHeaderLine1 { get; set; }
         protected string PreHeaderLine2 { get; set; }
         protected string SourceFile { get; set; }
-        protected readonly Encoding Iso88591 = Encoding.GetEncoding("iso-8859-1");
-        protected readonly Encoding Utf8 = Encoding.UTF8;
+        private readonly Encoding Iso88591 = Encoding.GetEncoding("iso-8859-1");
+        private readonly Encoding Utf8 = Encoding.UTF8;
 
         #endregion Protected Properties
 
@@ -60,7 +60,6 @@ namespace PrepareInputFiles.Parsers
             scan = new Regex(@"{.*}");
             cleanStep1 = ExtractEpisode(movieBase, scan, cleanStep1);
             movieBase.MovieName = cleanStep1.Trim();
-            return;
         }
 
         protected IEnumerable<Match> GetRegExpMatches(string pattern)

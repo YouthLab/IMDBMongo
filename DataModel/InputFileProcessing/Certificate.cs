@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataModel
+namespace DataModel.InputFileProcessing
 {
     public class Certificate : MovieBase
     {
