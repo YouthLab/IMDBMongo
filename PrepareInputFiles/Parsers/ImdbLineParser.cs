@@ -55,7 +55,7 @@ namespace PrepareInputFiles.Parsers
         protected void FixMovieNames(MovieBase movieBase, string nameInFile)
         {
             var cleanStep1 = nameInFile.Replace("\"", "").Trim();
-            var scan = new Regex(@"\([0-9][0-9][0-9][0-9]\)");
+            var scan = new Regex(@"\(([0-9|\?])([0-9|\?])([0-9|\?])([0-9|\?])\/*\w*\)");
             cleanStep1 = ExtractYear(movieBase, scan, cleanStep1);
             scan = new Regex(@"{.*}");
             cleanStep1 = ExtractEpisode(movieBase, scan, cleanStep1);
@@ -94,15 +94,26 @@ namespace PrepareInputFiles.Parsers
 
         private string ExtractYear(MovieBase movieBase, Regex scan, string inputString)
         {
-            var year = scan.Match(inputString);
-            if (!year.Success) return inputString;
-            var yearString = year.Value.Replace("(", "").Replace(")", "");
-            int yearNum;
-            var result = int.TryParse(yearString, out yearNum);
-            if (result)
-                movieBase.Year = yearNum;
-            else
-                movieBase.Year = null;
+            var yscan = new Regex(@"[0-9][0-9][0-9][0-9]");
+            var scanResult = yscan.Match(inputString);
+            if (scanResult.Success)
+            {
+                int yearNum;
+                var result = int.TryParse(scanResult.Value, out yearNum);
+                if (result)
+                    movieBase.Year = yearNum;
+                else
+                    movieBase.Year = null;
+            }
+            //var year = scan.Match(inputString);
+            //if (!year.Success) return inputString;
+            //var yearString = year.Value.Replace("(", "").Replace(")", "");
+            //int yearNum;
+            //var result = int.TryParse(yearString, out yearNum);
+            //if (result)
+            //    movieBase.Year = yearNum;
+            //else
+            //    movieBase.Year = null;
             inputString = scan.Replace(inputString, "");
             return inputString;
         }

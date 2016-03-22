@@ -57,6 +57,7 @@
     <Compile Include="Parsers\LiteratureParserTests.cs" />
     <Compile Include="Parsers\MpaaRatingsReasonsFileParserTests.cs" />
     <Compile Include="Parsers\ProdDesignerParserTests.cs" />
+    <Compile Include="Parsers\SoundMixParserTests.cs" />
     <Compile Include="Parsers\SoundTrackParserTests.cs" />
     <Compile Include="Parsers\TagLinesParserTests.cs" />
     <Compile Include="PrepareFilesTests.cs" />

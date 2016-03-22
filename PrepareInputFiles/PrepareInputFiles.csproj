@@ -72,6 +72,7 @@
     <Compile Include="Parsers\MpaaRatingsReasonsFileParser.cs" />
     <Compile Include="Parsers\FileParser.cs" />
     <Compile Include="Parsers\ProdDesignerParser.cs" />
+    <Compile Include="Parsers\SoundMixParser.cs" />
     <Compile Include="Parsers\SoundTrackParser.cs" />
     <Compile Include="Parsers\TagLinesParser.cs" />
     <Compile Include="PrepareFiles.cs" />
